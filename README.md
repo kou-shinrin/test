@@ -32,5 +32,6 @@ $ sls deploy --stage dev/stg/prod
 
 ## Refs
 
+- [AWS - Layers](https://serverless.com/framework/docs/providers/aws/guide/layers/#aws---layers)
 - [Lambda Layersを使うとデプロイは遅くなり、コールドスタートは高速化する？！Lambda Layersを使って巨大なLambda Functionを分割した場合の挙動の変化](https://dev.classmethod.jp/server-side/serverless/big-lambda-function-vs-use-layer/)
 
