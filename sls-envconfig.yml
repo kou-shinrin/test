@@ -1,0 +1,12 @@
+local:
+  env: local
+
+dev:
+  env: development
+
+stg:
+  env: staging
+
+prod:
+  env: production
+

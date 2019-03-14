@@ -1,0 +1,54 @@
+# Welcome to Serverless!
+# Happy Coding!
+
+service: servleressApp
+
+plugins:
+  - serverless-offline
+
+custom:
+  env: ${file(./sls-envconfig.yml):${self:provider.stage}.env}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  region: ap-northeast-1
+  timeout: 6
+  memorySize: 128
+
+  environment:
+    NODE_ENV: ${self:custom.env}
+
+package:
+  exclude:
+    - ./node_modules/**
+    - ./layers/**
+    - ./models/**
+    - .envrc
+    - package-lock.json
+    - package.json
+    - sls-envconfig.yml
+
+# https://serverless.com/framework/docs/providers/aws/guide/layers/
+layers:
+  libs:
+    path: layers
+    description: node_modules
+  models:
+    path: models
+    description: common models
+
+functions:
+  hello:
+    handler: handler.hello
+    name: ${self:provider.stage}_hello
+    description: GET /api/hello
+    layers:
+      - {Ref: LibsLambdaLayer} # libs -> Libs + LambdaLayer
+      - {Ref: ModelsLambdaLayer} # models -> Models + LambdaLayer
+    events:
+      - http:
+          path: api/hello
+          method: get
+
